@@ -1,0 +1,11 @@
+version: '2'
+services:
+  telegram_bot:
+    image: antirek/beebon-worker-telegram-alert
+    environment:
+      - NODE_ENV=default
+      - NODE_CONFIG_DIR=/etc/beebon-worker-telegram-alert
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "./config/:/etc/beebon-worker-telegram-alert"
+    restart: always
