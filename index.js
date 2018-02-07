@@ -6,11 +6,23 @@ const console = require('tracer').colorConsole();
 let queue = kue.createQueue({redis: config.redis});
 
 queue.process(config.kue.queueName, (job, done) => {
-    sendMessageToTelegram(job.data.number, job.data.message);
-    done()
+    let data = {
+        number: job.data.number,
+        message: job.data.message
+    };
+
+    sendMessageToTelegram(data)
+        .then((res) => {
+            console.log(res);
+            done();
+        })
+        .catch((err) => {
+            console.log('error:', err);
+            done(err);
+        });
 });
 
-function sendMessageToTelegram (number, message) {
+function sendMessageToTelegram ({number, message}) {
     console.log('start send --');
     console.log('number:', number, 'message:', message);
 
@@ -23,10 +35,7 @@ function sendMessageToTelegram (number, message) {
     };
 
     console.log('request options:', options);
-
-    return request(options)
-        .then(console.log)
-        .catch(console.log)
+    return request(options);
 }
 
-console.log('worker start');
+console.log('worker start with config:', config);
