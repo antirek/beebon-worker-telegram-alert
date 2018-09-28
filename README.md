@@ -1,2 +1,3 @@
-# beebon-worker-telegram-alert
-beebon worker for send message to telegram-alert
+# beebon-worker-alarmo
+
+beebon worker for send message to alarmo

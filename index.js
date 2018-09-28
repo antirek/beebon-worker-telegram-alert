@@ -11,7 +11,7 @@ queue.process(config.kue.queueName, (job, done) => {
         message: job.data.message
     };
 
-    sendMessageToTelegram(data)
+    sendMessageToAlarmo(data)
         .then((res) => {
             console.log(res);
             done();
@@ -22,11 +22,11 @@ queue.process(config.kue.queueName, (job, done) => {
         });
 });
 
-function sendMessageToTelegram ({number, message}) {
+function sendMessageToAlarmo ({number, message}) {
     console.log('start send --');
     console.log('number:', number, 'message:', message);
 
-    let url = config['telegram-alert'].url + number;
+    let url = config.alarmo.url + number;
     let options = {
         url,
         method: 'post',
